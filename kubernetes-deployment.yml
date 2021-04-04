@@ -26,10 +26,10 @@ spec: #this specification is for the deployment
           env:
             - name: value.passed
               value: "pushing to the master branch2"
-              valueFrom:
-                secretKeyRef:
-                  name: secret
-                  key: secret
+#              valueFrom:
+#                secretKeyRef:
+#                  name: secret
+#                  key: secret
           ports:
             - containerPort: 8081
           livenessProbe:
