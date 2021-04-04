@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernates-deployment
+  labels:
+    app: spring
+spec: #this specification is for the deployment
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring
+  template: #this template is the blueprint for the pods
+    metadata:
+      labels:
+        app: spring
+    spec: #this specification for containers in pod
+      containers:
+        - name: test-kubernates
+          image: kaulmohit17/test-kubernates
+          env:
+            - name: value.passed
+              value: "Redeploying the app"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: secret
+          ports:
+            - containerPort: 8081
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              port: 8081
+              path: /actuator
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              port: 8081
+              path: /actuator
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 768Mi
