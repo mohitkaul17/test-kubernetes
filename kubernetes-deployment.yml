@@ -25,7 +25,7 @@ spec: #this specification is for the deployment
           imagePullPolicy: Always
           env:
             - name: value.passed
-              value: "pushing to the master branch"
+              value: "pushing to the master branch2"
               valueFrom:
                 secretKeyRef:
                   name: secret
